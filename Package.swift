@@ -3,6 +3,8 @@
 
 import PackageDescription
 
+let compatiblePlatforms: [Platform] = [.iOS, .macCatalyst, .tvOS]
+
 let package = Package(
     name: "LookinServer",
     platforms: [
@@ -41,8 +43,8 @@ let package = Package(
                 .headerSearchPath("Shared/Peertalk"),
             ],
             cxxSettings: [
-                .define("SHOULD_COMPILE_LOOKIN_SERVER", to: "1", .when(configuration: .debug)),
-                .define("SPM_LOOKIN_SERVER_ENABLED", to: "1", .when(configuration: .debug))
+                .define("SHOULD_COMPILE_LOOKIN_SERVER", to: "1", .when(platforms: compatiblePlatforms, configuration: .debug)),
+                .define("SPM_LOOKIN_SERVER_ENABLED", to: "1", .when(platforms: compatiblePlatforms, configuration: .debug))
             ]
         ),
         .target(
@@ -50,12 +52,12 @@ let package = Package(
             dependencies: [.target(name: "LookinServerBase")],
             path: "Src/Swift",
             cxxSettings: [
-                .define("SHOULD_COMPILE_LOOKIN_SERVER", to: "1", .when(configuration: .debug)),
-                .define("SPM_LOOKIN_SERVER_ENABLED", to: "1", .when(configuration: .debug))
+                .define("SHOULD_COMPILE_LOOKIN_SERVER", to: "1", .when(platforms: compatiblePlatforms, configuration: .debug)),
+                .define("SPM_LOOKIN_SERVER_ENABLED", to: "1", .when(platforms: compatiblePlatforms, configuration: .debug))
             ],
             swiftSettings: [
-                .define("SHOULD_COMPILE_LOOKIN_SERVER", .when(configuration: .debug)),
-                .define("SPM_LOOKIN_SERVER_ENABLED", .when(configuration: .debug))
+                .define("SHOULD_COMPILE_LOOKIN_SERVER", .when(platforms: compatiblePlatforms, configuration: .debug)),
+                .define("SPM_LOOKIN_SERVER_ENABLED", .when(platforms: compatiblePlatforms, configuration: .debug))
             ]
         ),
         .target(
